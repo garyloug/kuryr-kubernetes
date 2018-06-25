@@ -78,36 +78,36 @@ Or in JSON format like:
             ]
 
 Then the VIF driver can parse the network information defined in 'Network'
-objects. In NPWG spec, the 'Network' object definition is very flexible.
-Implementations that are not CNI delegating plugins can add annotations to the
-Network object and use those to store non-CNI configuration. And it is up to
-the implementation to define the content it requires.
+objects. In NPWG spec, the 'NetworkAttachmentDefinition' object definition is
+very flexible. Implementations that are not CNI delegating plugins can add
+annotations to the Network object and use those to store non-CNI configuration.
+And it is up to the implementation to define the content it requires.
 
-Here is how 'Network' CRD specified in the NPWG spec.
+Here is how 'CustomResourceDefinition' CRD specified in the NPWG spec.
 
 .. code-block:: yaml
 
-    apiVersion: apiextensions.k8s.io/v1beta1
-    kind: CustomResourceDefinition
-    metadata:
-      name: networks.kubernetes.cni.cncf.io
-    spec:
-      group: kubernetes.cni.cncf.io
-      version: v1
-      scope: Namespaced
-      names:
-      plural: networks
-      singular: network
-      kind: Network
+  apiVersion: apiextensions.k8s.io/v1beta1
+  kind: CustomResourceDefinition
+  metadata:
+    name: network-attachment-definitions.k8s.v1.cni.cncf.io
+  spec:
+    group: k8s.v1.cni.cncf.io
+    version: v1
+    scope: Namespaced
+    names:
+      plural: network-attachment-definitions
+      singular: network-attachment-definition
+      kind: NetworkAttachmentDefinition
       shortNames:
-      - net
-      validation:
-        openAPIV3Schema:
-          properties:
-            spec:
-              properties:
-                config:
-                  type: string
+        - net-attach-def
+    validation:
+      openAPIV3Schema:
+        properties:
+          spec:
+            properties:
+              config:
+                type: string
 
 For Kuryr-kubernetes, users should define the 'Network' object with a Neutron
 subnet created previously like:
